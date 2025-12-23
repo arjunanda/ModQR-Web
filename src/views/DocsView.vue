@@ -422,19 +422,23 @@ generateQR('data', {
 @media (max-width: 768px) {
   .docs-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
   }
   .docs-sidebar {
-    position: static;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #0f172a; /* Match body background */
+    margin: 0 -1rem 2rem;
+    padding: 1rem;
     overflow-x: auto;
-    padding-bottom: 1rem;
     border-bottom: 1px solid var(--glass-border);
-    margin-bottom: 2rem;
   }
   .docs-sidebar ul {
     display: flex;
     gap: 1.5rem;
     white-space: nowrap;
+    padding: 0 0.5rem;
   }
   .docs-sidebar li {
     margin-bottom: 0;

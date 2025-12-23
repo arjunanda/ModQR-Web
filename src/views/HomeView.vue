@@ -602,6 +602,7 @@ h1 {
   .playground {
     grid-template-columns: 1fr;
     gap: 2rem;
+    margin-bottom: 4rem;
   }
   h1 {
     font-size: 3.5rem;
@@ -609,6 +610,10 @@ h1 {
   .tagline {
     font-size: 1.2rem;
     padding: 0 1rem;
+  }
+  .preview-container {
+    position: static;
+    order: -1; /* Show QR preview above controls on mobile */
   }
 }
 
@@ -621,18 +626,33 @@ h1 {
   }
   .controls {
     padding: 1.5rem;
+    border-radius: 1.5rem;
   }
   .preview-card {
-    min-height: 300px;
-    padding: 1rem;
+    min-height: auto;
+    aspect-ratio: 1 / 1;
+    padding: 1.5rem;
+    border-radius: 1.5rem;
   }
   .hero-actions {
     flex-direction: column;
     align-items: center;
+    gap: 0.75rem;
   }
   .btn {
     width: 100%;
     justify-content: center;
+  }
+  .color-grid {
+    grid-template-columns: 1fr;
+  }
+  .tabs {
+    overflow-x: auto;
+    padding: 0.5rem;
+  }
+  .tab {
+    padding: 0.5rem 1rem;
+    min-width: 80px;
   }
 }
 
