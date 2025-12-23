@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useLanguageStore } from '../stores/language';
 
 const version = __MODQR_VERSION__;
 const languageStore = useLanguageStore();
+
+onMounted(() => {
+  document.title = "Documentation - ModQR Aesthetic QR Code Generator";
+});
 
 const scrollToSection = (id: string) => {
   const el = document.getElementById(id);
@@ -418,9 +422,40 @@ generateQR('data', {
 @media (max-width: 768px) {
   .docs-grid {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
   .docs-sidebar {
-    display: none;
+    position: static;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 2rem;
+  }
+  .docs-sidebar ul {
+    display: flex;
+    gap: 1.5rem;
+    white-space: nowrap;
+  }
+  .docs-sidebar li {
+    margin-bottom: 0;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .docs-page {
+    padding-top: 6rem;
+  }
+  .docs-header h1 {
+    font-size: 2rem;
+  }
+  .code-block {
+    padding: 1rem;
+  }
+  pre {
+    font-size: 0.8rem;
   }
 }
 

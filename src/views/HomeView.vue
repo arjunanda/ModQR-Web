@@ -206,6 +206,7 @@ watch(
 
 onMounted(() => {
   updateQR();
+  document.title = "ModQR - The Most Aesthetic & Zero-Dependency QR Code Generator";
 });
 
 const downloadSvg = () => {
@@ -488,6 +489,13 @@ const downloadSvg = () => {
   z-index: 10;
 }
 
+@media (max-width: 640px) {
+  .lang-toggle-container {
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
 .lang-btn {
   background: var(--glass);
   border: 1px solid var(--glass-border);
@@ -593,9 +601,38 @@ h1 {
 @media (max-width: 968px) {
   .playground {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
   h1 {
     font-size: 3.5rem;
+  }
+  .tagline {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  header {
+    padding: 6rem 0 3rem;
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+  .controls {
+    padding: 1.5rem;
+  }
+  .preview-card {
+    min-height: 300px;
+    padding: 1rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -651,6 +688,12 @@ select:focus {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+@media (max-width: 968px) {
+  .preview-container {
+    position: static;
+  }
 }
 
 .preview-card {

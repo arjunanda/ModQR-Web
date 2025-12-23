@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://modqr.com/sitemap.xml
