@@ -4,7 +4,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('./fonts/jetbrains-mono.ttf') format('truetype');
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
 }
 
 @font-face {
@@ -12,7 +12,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('./fonts/outfit-300.ttf') format('truetype');
+  src: url('/fonts/outfit-300.woff2') format('woff2');
 }
 
 @font-face {
@@ -20,7 +20,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('./fonts/outfit-400.ttf') format('truetype');
+  src: url('/fonts/outfit-400.woff2') format('woff2');
 }
 
 @font-face {
@@ -28,7 +28,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('./fonts/outfit-600.ttf') format('truetype');
+  src: url('/fonts/outfit-600.woff2') format('woff2');
 }
 
 @font-face {
@@ -36,7 +36,7 @@
   font-style: normal;
   font-weight: 800;
   font-display: swap;
-  src: url('./fonts/outfit-800.ttf') format('truetype');
+  src: url('/fonts/outfit-800.woff2') format('woff2');
 }
 
 /* Global Styles */
@@ -68,6 +68,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
+  font-size-adjust: 0.52;
 }
 
 .container {
