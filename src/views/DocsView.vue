@@ -34,7 +34,9 @@ const translations = {
     },
     install: {
       title: "Installation",
-      desc: "Install the package via npm, yarn, or pnpm:"
+      desc: "Install the package via npm, yarn, or pnpm:",
+      cdnTitle: "CDN",
+      cdnDesc: "Or use directly in the browser via CDN:"
     },
     basic: {
       title: "Basic Usage",
@@ -99,7 +101,9 @@ const translations = {
     },
     install: {
       title: "Instalasi",
-      desc: "Instal paket melalui npm, yarn, atau pnpm:"
+      desc: "Instal paket melalui npm, yarn, atau pnpm:",
+      cdnTitle: "CDN",
+      cdnDesc: "Atau gunakan langsung di browser melalui CDN:"
     },
     basic: {
       title: "Penggunaan Dasar",
@@ -189,6 +193,12 @@ const t = computed(() => translations[languageStore.lang]);
           <p>{{ t.install.desc }}</p>
           <div class="code-block">
             <pre>npm install modqr</pre>
+          </div>
+
+          <h3>{{ t.install.cdnTitle }}</h3>
+          <p>{{ t.install.cdnDesc }}</p>
+          <div class="code-block">
+            <pre>&lt;script src="https://cdn.jsdelivr.net/npm/modqr@1.0.3/dist/modqr.min.js"&gt;&lt;/script&gt;</pre>
           </div>
         </section>
 
