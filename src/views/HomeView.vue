@@ -343,6 +343,19 @@ const downloadSvg = () => {
         <p>Render to SVG for web, Canvas for games, or ASCII for your terminal.</p>
       </div>
     </section>
+
+    <section class="support-section">
+      <h2>Support Development</h2>
+      <p>If you find ModQR useful, consider supporting its development:</p>
+      <div class="support-buttons">
+        <a href="https://ko-fi.com/G2G01QOQ38" target="_blank" rel="noopener noreferrer">
+          <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi" height="36" />
+        </a>
+        <a href="https://saweria.co/arjunanda09" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.shields.io/badge/Support-Saweria-orange?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Saweria" height="36" />
+        </a>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -570,5 +583,45 @@ select:focus {
 .feature-card h3 {
   margin-bottom: 1rem;
   color: var(--primary);
+}
+
+/* Support Section */
+.support-section {
+  text-align: center;
+  margin-bottom: 8rem;
+  padding: 4rem 2rem;
+  background: var(--glass);
+  border-radius: 2rem;
+  border: 1px solid var(--glass-border);
+}
+
+.support-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.support-section p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.support-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.support-buttons a {
+  transition: transform 0.2s;
+}
+
+.support-buttons a:hover {
+  transform: translateY(-2px);
 }
 </style>
