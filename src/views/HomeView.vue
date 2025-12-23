@@ -631,8 +631,7 @@ h1 {
   .preview-card {
     min-height: auto;
     aspect-ratio: 1 / 1;
-    padding: 1.5rem;
-    border-radius: 1.5rem;
+    padding: 0;
   }
   .hero-actions {
     flex-direction: column;
@@ -653,6 +652,13 @@ h1 {
   .tab {
     padding: 0.5rem 1rem;
     min-width: 80px;
+  }
+}
+
+@media (min-width: 640px) {
+  .preview-card {
+    padding: 2rem;
+    min-height: 400px;
   }
 }
 
@@ -718,12 +724,12 @@ select:focus {
 
 .preview-card {
   background: white;
-  padding: 2rem;
+  /* padding: 2rem; */
   border-radius: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
+  /* min-height: 400px; */
   position: relative;
   overflow: hidden;
 }
