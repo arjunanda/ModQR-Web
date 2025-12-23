@@ -38,6 +38,9 @@ const scrollToSection = (id: string) => {
             ModQR is built with a simple philosophy: <strong>Zero Dependencies, Maximum Flexibility</strong>.
           </p>
           <p>
+            Built with <strong>100% TypeScript</strong> and fully compliant with the <strong>ISO/IEC 18004</strong> standard, ModQR ensures your codes are universally scannable across all devices.
+          </p>
+          <p>
             In a world where <code>node_modules</code> is heavier than a black hole, ModQR stands light. 
             Crafted with pure TypeScript and a touch of mathematical magic, it generates QR codes that are not just scannable, but beautiful.
           </p>
@@ -56,27 +59,52 @@ const scrollToSection = (id: string) => {
 
         <section id="basic-usage">
           <h2>Basic Usage</h2>
-          <p>ModQR supports multiple output formats: SVG, Canvas, and ASCII.</p>
           
-          <h3>SVG Output (Recommended)</h3>
+          <h3>TypeScript Implementation</h3>
+          <p>Leverage full type safety with our exported interfaces.</p>
           <div class="code-block">
             <pre>
-import { generateQR } from 'modqr';
+import { generateQR, type ModQROptions } from 'modqr';
 
-const result = generateQR('https://github.com', {
+const options: ModQROptions = {
   renderer: 'svg',
   size: 300,
   foreground: '#6366f1'
-});
+};
 
-console.log(result.svg); // Returns SVG string</pre>
+const result = generateQR('https://modqr.com', options);</pre>
           </div>
 
-          <h3>Canvas Output</h3>
+          <h3>JavaScript Implementation</h3>
+          <p>Works with both ES Modules and CommonJS.</p>
           <div class="code-block">
             <pre>
-const canvas = document.getElementById('my-canvas');
-const result = generateQR('Hello World', { renderer: 'canvas' });
+// ES Modules
+import { generateQR } from 'modqr';
+
+// CommonJS
+const { generateQR } = require('modqr');
+
+const result = generateQR('https://modqr.com', {
+  renderer: 'svg',
+  size: 300
+});</pre>
+          </div>
+
+          <h3>Handling Outputs</h3>
+          
+          <h4>SVG (Default)</h4>
+          <div class="code-block">
+            <pre>
+const result = generateQR('data', { renderer: 'svg' });
+document.body.innerHTML = result.svg;</pre>
+          </div>
+
+          <h4>Canvas</h4>
+          <div class="code-block">
+            <pre>
+const result = generateQR('data', { renderer: 'canvas' });
+const canvas = document.querySelector('canvas');
 
 // Use optional chaining for safety
 result.drawCanvas?.(canvas);</pre>
@@ -90,16 +118,19 @@ result.drawCanvas?.(canvas);</pre>
           <h3>Module Styles</h3>
           <p>Available styles: <code>square</code>, <code>dots</code>, <code>rounded</code>, <code>liquid</code>, <code>blob</code>, <code>wave</code>, <code>pixel</code>, <code>gradient</code>, <code>neon</code>, <code>glass</code>, <code>dot-matrix</code>, <code>diamond</code>, <code>star</code>, <code>glitch</code>, <code>plus-cross</code>, <code>smooth-connected</code>.</p>
 
-          <h3>Finder Styles</h3>
-          <p>You can set a global style or customize each corner individually.</p>
+          <h3>Finder Styles & Colors</h3>
+          <p>You can set a global style or customize each corner's style and color individually.</p>
           <div class="code-block">
             <pre>
 generateQR('data', {
-  finderStyle: 'rounded', // Global
+  finderStyle: 'rounded',
+  finderColor: "#ff0000",
+
+  // Or per-corner color
   customFinderStyles: {
-    topLeft: 'leaf',
-    topRight: 'dots',
-    bottomLeft: 'square'
+    topLeft: { style: "rounded", color: "#ff0000" },
+    topRight: { style: "dots", color: "#00ff00" },
+    bottomLeft: "leaf", // Inherits finderColor or foreground
   }
 });</pre>
           </div>
@@ -136,6 +167,16 @@ generateQR('data', {
             <h4>QR Code not scannable</h4>
             <p>This usually happens if the foreground and background colors don't have enough contrast, or if the logo is too large (exceeding error correction capacity).</p>
             <p><strong>Solution:</strong> Keep logo size below 0.25 and ensure high contrast between colors.</p>
+          </div>
+
+          <div class="trouble-item">
+            <h4>Found a Bug?</h4>
+            <p>If you encounter any issues or have feature requests, please report them on our GitHub repository.</p>
+            <p>
+              <a href="https://github.com/arjunanda/modqr/issues" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: none; font-weight: bold;">
+                Open an Issue →
+              </a>
+            </p>
           </div>
         </section>
       </main>
