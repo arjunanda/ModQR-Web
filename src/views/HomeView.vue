@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { generateQR } from "modqr";
+import { useLanguageStore } from "../stores/language";
+
+const languageStore = useLanguageStore();
+const version = __MODQR_VERSION__;
 
 // State
 const qrData = ref("https://github.com/arjunanda/modqr");
@@ -16,9 +20,120 @@ const enableCustomFinders = ref(false);
 const finderTl = ref("square");
 const finderTr = ref("square");
 const finderBl = ref("square");
+const eccLevel = ref("Q");
 const currentTab = ref("svg");
 
-const version = "1.0.0";
+// Translations
+const translations = {
+  en: {
+    badge: `v${version} is out now`,
+    tagline: "No dependencies. Because npm install already hurts enough.",
+    buttons: {
+      docs: "Read Documentation",
+      github: "GitHub"
+    },
+    controls: {
+      dataUrl: "Data / URL",
+      dataPlaceholder: "Enter text or URL",
+      moduleStyle: "Module Style",
+      finderStyle: "Finder Style (Global)",
+      customFinder: "Custom per corner",
+      topLeft: "Top-Left Corner",
+      topRight: "Top-Right Corner",
+      bottomLeft: "Bottom-Left Corner",
+      foreground: "Foreground",
+      background: "Background",
+      margin: "Margin",
+      logoUrl: "Logo URL (Optional)",
+      logoSize: "Logo Size",
+      logoMargin: "Logo Margin",
+      ecc: "Error Correction Level",
+      download: "Download SVG"
+    },
+    tabs: {
+      svg: "SVG",
+      canvas: "Canvas",
+      ascii: "ASCII"
+    },
+    features: {
+      zeroDeps: {
+        title: "Zero Dependencies",
+        desc: "Built from scratch with pure TypeScript. No heavy libraries, just clean code."
+      },
+      aesthetic: {
+        title: "Highly Aesthetic",
+        desc: "15+ module styles and 9+ finder styles to match your brand's identity."
+      },
+      scannable: {
+        title: "100% Scannable",
+        desc: "Strictly adheres to ISO/IEC 18004 standards while looking beautiful."
+      },
+      multiOutput: {
+        title: "Multi-Output",
+        desc: "Render to SVG for web, Canvas for games, or ASCII for your terminal."
+      }
+    },
+    support: {
+      title: "Support Development",
+      desc: "If you find ModQR useful, consider supporting its development:"
+    }
+  },
+  id: {
+    badge: `v${version} sudah rilis`,
+    tagline: "Tanpa dependensi. Karena npm install sudah cukup menyakitkan.",
+    buttons: {
+      docs: "Baca Dokumentasi",
+      github: "GitHub"
+    },
+    controls: {
+      dataUrl: "Data / URL",
+      dataPlaceholder: "Masukkan teks atau URL",
+      moduleStyle: "Gaya Modul",
+      finderStyle: "Gaya Pencari (Global)",
+      customFinder: "Kustom per sudut",
+      topLeft: "Sudut Kiri Atas",
+      topRight: "Sudut Kanan Atas",
+      bottomLeft: "Sudut Kiri Bawah",
+      foreground: "Warna Depan",
+      background: "Latar Belakang",
+      margin: "Margin",
+      logoUrl: "URL Logo (Opsional)",
+      logoSize: "Ukuran Logo",
+      logoMargin: "Margin Logo",
+      ecc: "Tingkat Koreksi Kesalahan",
+      download: "Unduh SVG"
+    },
+    tabs: {
+      svg: "SVG",
+      canvas: "Canvas",
+      ascii: "ASCII"
+    },
+    features: {
+      zeroDeps: {
+        title: "Tanpa Dependensi",
+        desc: "Dibangun dari awal dengan TypeScript murni. Tanpa pustaka berat, hanya kode bersih."
+      },
+      aesthetic: {
+        title: "Sangat Estetik",
+        desc: "15+ gaya modul dan 9+ gaya pencari untuk mencocokkan identitas merek Anda."
+      },
+      scannable: {
+        title: "100% Dapat Dipindai",
+        desc: "Mematuhi standar ISO/IEC 18004 dengan ketat sambil tetap terlihat indah."
+      },
+      multiOutput: {
+        title: "Multi-Output",
+        desc: "Render ke SVG untuk web, Canvas untuk game, atau ASCII untuk terminal Anda."
+      }
+    },
+    support: {
+      title: "Dukung Pengembangan",
+      desc: "Jika Anda merasa ModQR bermanfaat, pertimbangkan untuk mendukung pengembangannya:"
+    }
+  }
+};
+
+const t = computed(() => translations[languageStore.lang]);
 
 // Refs for previews
 const previewSvg = ref<string>("");
@@ -27,12 +142,13 @@ const previewAscii = ref<string>("");
 
 const updateQR = () => {
   const options: Record<string, any> = {
-    size: 400,
+    size: 300,
     margin: margin.value,
     foreground: fgColor.value,
     background: bgColor.value,
     style: qrStyle.value,
     finderStyle: finderStyle.value,
+    ecc: eccLevel.value,
   };
 
   if (enableCustomFinders.value) {
@@ -77,11 +193,11 @@ watch(
     margin,
     logoUrl,
     logoSize,
-    logoMargin,
     enableCustomFinders,
     finderTl,
     finderTr,
     finderBl,
+    eccLevel,
   ],
   () => {
     updateQR();
@@ -107,19 +223,25 @@ const downloadSvg = () => {
 
 <template>
   <div class="container">
+    <div class="lang-toggle-container">
+      <button class="lang-btn" @click="languageStore.toggleLang">
+        {{ languageStore.lang === 'en' ? '🇮🇩 ID' : '🇺🇸 EN' }}
+      </button>
+    </div>
+
     <header>
-      <div class="badge">v{{ version }} is out now</div>
+      <div class="badge">{{ t.badge }}</div>
       <h1>ModQR</h1>
       <p class="tagline">
-        No dependencies. Because npm install already hurts enough.
+        {{ t.tagline }}
       </p>
       <div class="hero-actions">
-        <RouterLink to="/docs" class="btn btn-outline">Read Documentation</RouterLink>
+        <RouterLink to="/docs" class="btn btn-outline">{{ t.buttons.docs }}</RouterLink>
         <a href="https://github.com/arjunanda/modqr" target="_blank" class="btn btn-github">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
             <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
           </svg>
-          GitHub
+          {{ t.buttons.github }}
         </a>
       </div>
     </header>
@@ -127,12 +249,12 @@ const downloadSvg = () => {
     <main class="playground">
       <div class="controls">
         <div class="form-group">
-          <label>Data / URL</label>
-          <input type="text" v-model="qrData" placeholder="Enter text or URL" />
+          <label>{{ t.controls.dataUrl }}</label>
+          <input type="text" v-model="qrData" :placeholder="t.controls.dataPlaceholder" />
         </div>
 
         <div class="form-group">
-          <label>Module Style</label>
+          <label>{{ t.controls.moduleStyle }}</label>
           <select v-model="qrStyle">
             <option value="square">Square (Classic)</option>
             <option value="dots">Dots</option>
@@ -154,6 +276,16 @@ const downloadSvg = () => {
         </div>
 
         <div class="form-group">
+          <label>{{ t.controls.ecc }}</label>
+          <select v-model="eccLevel">
+            <option value="L">L (Low - 7%)</option>
+            <option value="M">M (Medium - 15%)</option>
+            <option value="Q">Q (Quartile - 25%)</option>
+            <option value="H">H (High - 30%)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <div
             style="
               display: flex;
@@ -162,7 +294,7 @@ const downloadSvg = () => {
               margin-bottom: 0.5rem;
             "
           >
-            <label style="margin-bottom: 0">Finder Style (Global)</label>
+            <label style="margin-bottom: 0">{{ t.controls.finderStyle }}</label>
             <label
               style="
                 display: flex;
@@ -172,7 +304,7 @@ const downloadSvg = () => {
                 cursor: pointer;
               "
             >
-              <input type="checkbox" v-model="enableCustomFinders" /> Custom per corner
+              <input type="checkbox" v-model="enableCustomFinders" /> {{ t.controls.customFinder }}
             </label>
           </div>
           <select v-model="finderStyle" :disabled="enableCustomFinders">
@@ -204,7 +336,7 @@ const downloadSvg = () => {
           "
         >
           <div class="form-group">
-            <label>Top-Left Corner</label>
+            <label>{{ t.controls.topLeft }}</label>
             <select v-model="finderTl">
               <option value="square">Square</option>
               <option value="rounded">Rounded</option>
@@ -215,7 +347,7 @@ const downloadSvg = () => {
             </select>
           </div>
           <div class="form-group">
-            <label>Top-Right Corner</label>
+            <label>{{ t.controls.topRight }}</label>
             <select v-model="finderTr">
               <option value="square">Square</option>
               <option value="rounded">Rounded</option>
@@ -226,7 +358,7 @@ const downloadSvg = () => {
             </select>
           </div>
           <div class="form-group" style="margin-bottom: 0">
-            <label>Bottom-Left Corner</label>
+            <label>{{ t.controls.bottomLeft }}</label>
             <select v-model="finderBl">
               <option value="square">Square</option>
               <option value="rounded">Rounded</option>
@@ -240,17 +372,17 @@ const downloadSvg = () => {
 
         <div class="color-grid">
           <div class="form-group">
-            <label>Foreground</label>
+            <label>{{ t.controls.foreground }}</label>
             <input type="color" v-model="fgColor" style="height: 45px; padding: 2px" />
           </div>
           <div class="form-group">
-            <label>Background</label>
+            <label>{{ t.controls.background }}</label>
             <input type="color" v-model="bgColor" style="height: 45px; padding: 2px" />
           </div>
         </div>
 
         <div class="form-group">
-          <label>Margin</label>
+          <label>{{ t.controls.margin }}</label>
           <input type="range" v-model.number="margin" min="0" max="10" style="width: 100%" />
         </div>
 
@@ -258,56 +390,45 @@ const downloadSvg = () => {
           class="form-group"
           style="border-top: 1px solid var(--glass-border); padding-top: 1.5rem; margin-top: 1.5rem"
         >
-          <label>Logo URL (Optional)</label>
+          <label>{{ t.controls.logoUrl }}</label>
           <input type="text" v-model="logoUrl" placeholder="https://example.com/logo.png" />
         </div>
 
         <div class="color-grid">
           <div class="form-group">
-            <label>Logo Size</label>
+            <label>{{ t.controls.logoSize }}</label>
             <input
               type="range"
               v-model.number="logoSize"
               min="0.1"
-              max="0.3"
+              max="0.25"
               step="0.05"
-              style="width: 100%"
-            />
-          </div>
-          <div class="form-group">
-            <label>Logo Margin</label>
-            <input
-              type="range"
-              v-model.number="logoMargin"
-              min="0"
-              max="5"
-              step="1"
               style="width: 100%"
             />
           </div>
         </div>
 
-        <button class="btn" @click="downloadSvg">Download SVG</button>
+        <button class="btn" @click="downloadSvg">{{ t.controls.download }}</button>
       </div>
 
       <div class="preview-container">
         <div class="tabs">
           <div class="tab" :class="{ active: currentTab === 'svg' }" @click="currentTab = 'svg'">
-            SVG
+            {{ t.tabs.svg }}
           </div>
           <div
             class="tab"
             :class="{ active: currentTab === 'canvas' }"
             @click="currentTab = 'canvas'"
           >
-            Canvas
+            {{ t.tabs.canvas }}
           </div>
           <div
             class="tab"
             :class="{ active: currentTab === 'ascii' }"
             @click="currentTab = 'ascii'"
           >
-            ASCII
+            {{ t.tabs.ascii }}
           </div>
         </div>
 
@@ -327,26 +448,26 @@ const downloadSvg = () => {
 
     <section class="features">
       <div class="feature-card">
-        <h3>Zero Dependencies</h3>
-        <p>Built from scratch with pure TypeScript. No heavy libraries, just clean code.</p>
+        <h3>{{ t.features.zeroDeps.title }}</h3>
+        <p>{{ t.features.zeroDeps.desc }}</p>
       </div>
       <div class="feature-card">
-        <h3>Highly Aesthetic</h3>
-        <p>15+ module styles and 9+ finder styles to match your brand's identity.</p>
+        <h3>{{ t.features.aesthetic.title }}</h3>
+        <p>{{ t.features.aesthetic.desc }}</p>
       </div>
       <div class="feature-card">
-        <h3>100% Scannable</h3>
-        <p>Strictly adheres to ISO/IEC 18004 standards while looking beautiful.</p>
+        <h3>{{ t.features.scannable.title }}</h3>
+        <p>{{ t.features.scannable.desc }}</p>
       </div>
       <div class="feature-card">
-        <h3>Multi-Output</h3>
-        <p>Render to SVG for web, Canvas for games, or ASCII for your terminal.</p>
+        <h3>{{ t.features.multiOutput.title }}</h3>
+        <p>{{ t.features.multiOutput.desc }}</p>
       </div>
     </section>
 
     <section class="support-section">
-      <h2>Support Development</h2>
-      <p>If you find ModQR useful, consider supporting its development:</p>
+      <h2>{{ t.support.title }}</h2>
+      <p>{{ t.support.desc }}</p>
       <div class="support-buttons">
         <a href="https://ko-fi.com/G2G01QOQ38" target="_blank" rel="noopener noreferrer">
           <img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="ko-fi" height="36" />
@@ -360,6 +481,30 @@ const downloadSvg = () => {
 </template>
 
 <style scoped>
+.lang-toggle-container {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.lang-btn {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.lang-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
 .hero-actions {
   margin-top: 2rem;
   display: flex;
