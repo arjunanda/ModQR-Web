@@ -373,8 +373,8 @@ generateQR('data', {
 
 <style scoped>
 .docs-page {
-  padding-top: 8rem; /* Increased to account for fixed nav */
-  padding-bottom: 8rem;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
 }
 
 .docs-header {
@@ -415,57 +415,161 @@ generateQR('data', {
 
 .docs-grid {
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 280px 1fr;
   gap: 4rem;
+  width: 100%;
+  min-width: 0;
 }
 
-@media (max-width: 768px) {
+.docs-content {
+  min-width: 0;
+  width: 100%;
+}
+
+@media (max-width: 1100px) {
+  .docs-grid {
+    gap: 2rem;
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+@media (max-width: 992px) {
   .docs-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 3rem;
   }
+  
   .docs-sidebar {
     position: sticky;
     top: 0;
-    z-index: 20;
-    background: #0f172a; /* Match body background */
-    margin: 0 -1rem 2rem;
-    padding: 1rem;
-    overflow-x: auto;
+    z-index: 100;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    margin: 0 -2rem 0;
     border-bottom: 1px solid var(--glass-border);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  
+  .docs-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  
   .docs-sidebar ul {
     display: flex;
-    gap: 1.5rem;
-    white-space: nowrap;
-    padding: 0 0.5rem;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    width: max-content;
+    min-width: 100%;
   }
+  
+  .docs-sidebar ul::-webkit-scrollbar {
+    display: none;
+  }
+  
   .docs-sidebar li {
     margin-bottom: 0;
+    flex-shrink: 0;
   }
+
+  .docs-sidebar a {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    background: var(--glass);
+    border-radius: 2rem;
+    border: 1px solid var(--glass-border);
+    display: block;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+
+  .docs-sidebar a:hover, .docs-sidebar a.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+  }
+
   h2 {
     font-size: 2rem;
   }
+  
+  .docs-content section {
+    scroll-margin-top: 6rem; /* Account for sticky nav */
+  }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .docs-page {
-    padding-top: 6rem;
+    padding-top: 2rem;
   }
+  
+  .header-top {
+    margin-bottom: 1.5rem;
+  }
+
   .docs-header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
+    line-height: 1.2;
   }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+  
+  .docs-sidebar {
+    margin: 0 -1rem 0;
+  }
+
+  .docs-sidebar ul {
+    padding: 0.75rem 1rem;
+  }
+
   .code-block {
-    padding: 1rem;
+    margin: 1.5rem -1rem;
+    padding: 1.25rem 1rem;
+    border-radius: 0;
+    width: auto;
   }
+  
   pre {
     font-size: 0.8rem;
+  }
+
+  .trouble-item {
+    padding: 1.5rem 1rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    border-radius: 1rem;
+    width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .docs-header h1 {
+    font-size: 1.5rem;
+    word-break: break-word;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .lang-btn {
+    width: 100%;
+    text-align: center;
   }
 }
 
 .docs-sidebar {
   position: sticky;
-  top: 2rem;
+  top: 6rem; /* Adjusted for header */
   height: fit-content;
 }
 
@@ -498,6 +602,8 @@ h2 {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
   color: white;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 h3 {
@@ -516,6 +622,8 @@ p {
   color: var(--text-muted);
   margin-bottom: 1rem;
   font-size: 1.1rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .code-block {
@@ -525,6 +633,7 @@ p {
   margin: 1rem 0;
   border: 1px solid var(--glass-border);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 pre {
@@ -532,15 +641,23 @@ pre {
   color: #10b981;
   font-size: 0.9rem;
   line-height: 1.5;
+  margin: 0;
+  white-space: pre;
 }
 
-code {
+:deep(code) {
   background: var(--glass);
   padding: 0.2rem 0.4rem;
   border-radius: 0.4rem;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9em;
   color: var(--accent);
+  word-break: break-all;
+}
+
+:deep(strong) {
+  color: white;
+  font-weight: 600;
 }
 
 .trouble-item {
