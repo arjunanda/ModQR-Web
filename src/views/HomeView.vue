@@ -225,9 +225,22 @@ const downloadSvg = () => {
 <template>
   <div class="container">
     <div class="lang-toggle-container">
-      <button class="lang-btn" @click="languageStore.toggleLang">
-        {{ languageStore.lang === 'en' ? '🇮🇩 ID' : '🇺🇸 EN' }}
-      </button>
+      <div class="lang-switcher">
+        <button 
+          class="lang-btn-small" 
+          :class="{ active: languageStore.lang === 'id' }"
+          @click="languageStore.setLang('id')"
+        >
+          ID
+        </button>
+        <button 
+          class="lang-btn-small" 
+          :class="{ active: languageStore.lang === 'en' }"
+          @click="languageStore.setLang('en')"
+        >
+          EN
+        </button>
+      </div>
     </div>
 
     <header>
@@ -483,34 +496,47 @@ const downloadSvg = () => {
 
 <style scoped>
 .lang-toggle-container {
-  position: absolute;
+  position: fixed;
   top: 2rem;
   right: 2rem;
-  z-index: 10;
+  z-index: 1000;
 }
 
 @media (max-width: 640px) {
   .lang-toggle-container {
-    top: 1rem;
-    right: 1rem;
+    top: 0.75rem;
+    right: 0.75rem;
   }
 }
 
-.lang-btn {
+.lang-switcher {
+  display: flex;
   background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-  padding: 0.5rem 1rem;
+  padding: 0.25rem;
   border-radius: 0.5rem;
+  border: 1px solid var(--glass-border);
+}
+
+.lang-btn-small {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.35rem;
   cursor: pointer;
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.75rem;
   transition: all 0.2s;
 }
 
-.lang-btn:hover {
+.lang-btn-small.active {
   background: var(--primary);
-  border-color: var(--primary);
+  color: white;
+}
+
+.lang-btn-small:hover:not(.active) {
+  color: var(--text);
 }
 
 .hero-actions {
@@ -554,7 +580,7 @@ const downloadSvg = () => {
 
 /* Hero Section */
 header {
-  padding: 10rem 0 4rem; /* Increased top padding */
+  padding: 8rem 0 4rem; /* Adjusted padding */
   text-align: center;
   background: radial-gradient(circle at top center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
 }

@@ -161,9 +161,22 @@ const t = computed(() => translations[languageStore.lang]);
     <header class="docs-header">
       <div class="header-top">
         <RouterLink to="/" class="back-link">{{ t.back }}</RouterLink>
-        <button class="lang-btn" @click="languageStore.toggleLang">
-          {{ languageStore.lang === 'en' ? '🇮🇩 ID' : '🇺🇸 EN' }}
-        </button>
+        <div class="lang-switcher">
+          <button 
+            class="lang-btn-small" 
+            :class="{ active: languageStore.lang === 'id' }"
+            @click="languageStore.setLang('id')"
+          >
+            ID
+          </button>
+          <button 
+            class="lang-btn-small" 
+            :class="{ active: languageStore.lang === 'en' }"
+            @click="languageStore.setLang('en')"
+          >
+            EN
+          </button>
+        </div>
       </div>
       <h1>{{ t.title }}</h1>
       <p class="tagline" v-html="t.tagline"></p>
@@ -396,21 +409,34 @@ generateQR('data', {
   display: block;
 }
 
-.lang-btn {
+.lang-switcher {
+  display: flex;
   background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-  padding: 0.5rem 1rem;
+  padding: 0.25rem;
   border-radius: 0.5rem;
+  border: 1px solid var(--glass-border);
+}
+
+.lang-btn-small {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.35rem;
   cursor: pointer;
   font-family: inherit;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.75rem;
   transition: all 0.2s;
 }
 
-.lang-btn:hover {
+.lang-btn-small.active {
   background: var(--primary);
-  border-color: var(--primary);
+  color: white;
+}
+
+.lang-btn-small:hover:not(.active) {
+  color: var(--text);
 }
 
 .docs-grid {
@@ -443,8 +469,8 @@ generateQR('data', {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(15, 23, 42, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
     margin: 0 -2rem 0;
     border-bottom: 1px solid var(--glass-border);
     overflow-x: auto;
@@ -458,8 +484,8 @@ generateQR('data', {
   
   .docs-sidebar ul {
     display: flex;
-    gap: 1rem;
-    padding: 1rem 2rem;
+    gap: 0.75rem;
+    padding: 0.75rem 2rem;
     width: max-content;
     min-width: 100%;
   }
@@ -522,7 +548,7 @@ generateQR('data', {
   }
 
   .docs-sidebar ul {
-    padding: 0.75rem 1rem;
+    padding: 0.6rem 1rem;
   }
 
   .code-block {
@@ -561,9 +587,11 @@ generateQR('data', {
     gap: 1rem;
   }
   
-  .lang-btn {
-    width: 100%;
-    text-align: center;
+  .lang-switcher {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
   }
 }
 
